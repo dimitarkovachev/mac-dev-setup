@@ -114,6 +114,7 @@
   brew install --cask evernote                                                                            # cloud note
   brew install --cask kap                                                                                 # video screenshot
   brew install --cask rectangle                                                                           # manage windows
+  brew install --cask alt-tab
 
   # Communication
   brew install --cask slack
