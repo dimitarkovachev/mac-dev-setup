@@ -56,12 +56,12 @@
   # git
   brew install git                                                                                      # https://formulae.brew.sh/formula/git
   # Adding git aliases (https://github.com/thomaspoignant/gitalias)
-  git clone https://github.com/thomaspoignant/gitalias.git $INSTALL_FOLDER/gitalias && echo -e "[include]\n    path = $INSTALL_FOLDER/gitalias/.gitalias\n$(cat ~/.gitconfig)" > ~/.gitconfig
+  # git clone https://github.com/thomaspoignant/gitalias.git $INSTALL_FOLDER/gitalias && echo -e "[include]\n    path = $INSTALL_FOLDER/gitalias/.gitalias\n$(cat ~/.gitconfig)" > ~/.gitconfig
 
-  brew install git-secrets                                                                              # git hook to check if you are pushing aws secret (https://github.com/awslabs/git-secrets)
-  git secrets --register-aws --global
-  git secrets --install ~/.git-templates/git-secrets
-  git config --global init.templateDir ~/.git-templates/git-secrets
+  # brew install git-secrets                                                                              # git hook to check if you are pushing aws secret (https://github.com/awslabs/git-secrets)
+  # git secrets --register-aws --global
+  # git secrets --install ~/.git-templates/git-secrets
+  # git config --global init.templateDir ~/.git-templates/git-secrets
 
   # ZSH
   brew install zsh                                                                     # Install zsh and zsh completions
@@ -73,8 +73,8 @@
   # Terminal replacement https://www.iterm2.com
   brew install --cask iterm2
   # Pimp command line
-  brew install micro                                                                                    # replacement for nano/vi
-  brew install lsd                                                                                      # replacement for ls
+  # brew install micro                                                                                    # replacement for nano/vi
+  # brew install lsd                                                                                      # replacement for ls
   {
     echo "alias ls='lsd'"
     echo "alias l='ls -l'"
@@ -84,7 +84,7 @@
   } >>$MAC_SETUP_PROFILE
 
   brew install tree
-  brew install ack
+  # brew install ack
   brew install bash-completion
   brew install jq
   brew install htop
@@ -96,30 +96,30 @@
   touch ~/.z
   echo '. /usr/local/etc/profile.d/z.sh' >> $MAC_SETUP_PROFILE
 
-  brew install ctop
+  # brew install ctop
 
   # fonts (https://github.com/tonsky/FiraCode/wiki/Intellij-products-instructions)
-  brew tap homebrew/cask-fonts
-  brew install --cask font-jetbrains-mono
+  # brew tap homebrew/cask-fonts
+  # brew install --cask font-jetbrains-mono
 
   # Browser
-  brew install --cask google-chrome
+  # brew install --cask google-chrome
   # brew install --cask firefox
   # brew install --cask microsoft-edge
 
   # Music / Video
-  brew install --cask spotify
-  brew install --cask vlc
+  # brew install --cask spotify
+  # brew install --cask vlc
 
   # Productivity
-  brew install --cask evernote                                                                            # cloud note
-  brew install --cask kap                                                                                 # video screenshot
+  # brew install --cask evernote                                                                            # cloud note
+  # brew install --cask kap                                                                                 # video screenshot
   brew install --cask rectangle                                                                           # manage windows
   brew install --cask alt-tab
 
   # Communication
-  brew install --cask slack
-  brew install --cask whatsapp
+  # brew install --cask slack
+  # brew install --cask whatsapp
 
   # Dev tools
   brew install --cask ngrok                                                                               # tunnel localhost over internet.
@@ -176,14 +176,14 @@
   echo 'export PATH="/usr/local/opt/libpq/bin:$PATH"' >> $MAC_SETUP_PROFILE
 
   # SFTP
-  brew install --cask cyberduck
+  # brew install --cask cyberduck
 
   # Docker
-  brew install --cask docker
-  brew install bash-completion
-  brew install docker-completion
-  brew install docker-compose-completion
-  brew install docker-machine-completion
+  # brew install --cask docker
+  # brew install bash-completion
+  # brew install docker-completion
+  # brew install docker-compose-completion
+  # brew install docker-machine-completion
 
   # AWS command line
   brew install awscli # Official command line
