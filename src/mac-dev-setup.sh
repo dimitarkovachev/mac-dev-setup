@@ -68,7 +68,8 @@
   sudo chmod -R 755 /usr/local/share/zsh
   sudo chown -R root:staff /usr/local/share/zsh
 
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"# Install oh-my-zsh on top of zsh to getting additional functionality
+  # Install oh-my-zsh on top of zsh to getting additional functionality
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   # Terminal replacement https://www.iterm2.com
   brew install --cask iterm2
   # Pimp command line
