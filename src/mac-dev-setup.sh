@@ -116,6 +116,7 @@
   # brew install --cask kap                                                                                 # video screenshot
   brew install --cask rectangle                                                                           # manage windows
   brew install --cask alt-tab
+  brew install --cask alfred
 
   # Communication
   # brew install --cask slack
