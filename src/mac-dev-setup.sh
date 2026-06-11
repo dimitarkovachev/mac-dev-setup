@@ -70,8 +70,10 @@
 
   # Install oh-my-zsh on top of zsh to getting additional functionality
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  # Terminal replacement https://www.iterm2.com
-  brew install --cask iterm2
+  # Terminal replacement https://cmux.com/
+  brew install --cask cmux
+  brew install fzf
+
   # Pimp command line
   # brew install micro                                                                                    # replacement for nano/vi
   # brew install lsd                                                                                      # replacement for ls
@@ -95,6 +97,7 @@
   brew install z
   touch ~/.z
   echo '. /usr/local/etc/profile.d/z.sh' >> $MAC_SETUP_PROFILE
+  echo 'source ~/.zsh_funcs' >> $MAC_SETUP_PROFILE
 
   # brew install ctop
 
@@ -106,6 +109,7 @@
   # brew install --cask google-chrome
   # brew install --cask firefox
   # brew install --cask microsoft-edge
+  brew install --cask zen
 
   # Music / Video
   # brew install --cask spotify
@@ -128,7 +132,14 @@
 
   # IDE
   # brew install --cask jetbrains-toolbox
-  brew install --cask visual-studio-code
+  brew install --cask vscodium
+
+  {
+    echo "alias code='codium'"
+    echo "export EDITOR='code -w'"
+  } >>$MAC_SETUP_PROFILE
+
+  npm i -g opencode-ai@latest
 
   # Language
   ## Node / Javascript
@@ -196,17 +207,23 @@
   brew install asdf
   asdf install kubectl latest
 
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+  git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
+
+  {
+    plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
+
+    source $ZSH/oh-my-zsh.sh
+  }>>$MAC_SETUP_PROFILE
+
   # reload profile files.
   {
     echo "source $MAC_SETUP_PROFILE # alias and things added by mac_setup script"
   }>>"$HOME/.zsh_profile"
   # shellcheck disable=SC1090
   source "$HOME/.zshrc"
-
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-  git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
 
   echo "Done!"
 
