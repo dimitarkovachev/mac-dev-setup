@@ -58,6 +58,43 @@
   # Adding git aliases (https://github.com/thomaspoignant/gitalias)
   # git clone https://github.com/thomaspoignant/gitalias.git $INSTALL_FOLDER/gitalias && echo -e "[include]\n    path = $INSTALL_FOLDER/gitalias/.gitalias\n$(cat ~/.gitconfig)" > ~/.gitconfig
 
+  brew install gh
+  gh auth login
+
+  SSH_KEY="$HOME/.ssh/id_ed25519"
+  if [ ! -f "$SSH_KEY" ]; then
+    ssh-keygen -t ed25519 -C "kovachevd98@@gmail.com" -f "$SSH_KEY" -N ""
+  fi
+
+  # Add the public key to your GitHub account
+  gh ssh-key add "${SSH_KEY}.pub" --title "$(hostname)-setup"
+
+  # Ensure SSH config exists and sets GitHub to use your key
+  SSH_CONFIG="$HOME/.ssh/config"
+  mkdir -p "$HOME/.ssh"
+  chmod 700 "$HOME/.ssh"
+
+  if ! grep -q "Host github.com" "$SSH_CONFIG" 2>/dev/null; then
+    cat >> "$SSH_CONFIG" <<EOF
+
+Host *
+  SendEnv LANG
+  SetEnv TERM=xterm-256color
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+EOF
+    chmod 600 "$SSH_CONFIG"
+  fi
+
+  git clone --bare git@github.com:dimitarkovachev/.dotfiles.git ~/.dotfiles
+  alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+  dotfiles checkout
+  dotfiles config --local status.showUntrackedFiles no
+  echo "alias dotfiles='git --git-dir=\$HOME/.dotfiles --work-tree=\$HOME'" >>$MAC_SETUP_PROFILE
+
   # brew install git-secrets                                                                              # git hook to check if you are pushing aws secret (https://github.com/awslabs/git-secrets)
   # git secrets --register-aws --global
   # git secrets --install ~/.git-templates/git-secrets
@@ -121,6 +158,7 @@
   brew install --cask rectangle                                                                           # manage windows
   brew install --cask alt-tab
   brew install --cask alfred
+  brew install --cask karabiner-elements
 
   # Communication
   # brew install --cask slack
@@ -138,6 +176,8 @@
     echo "alias code='codium'"
     echo "export EDITOR='code -w'"
   } >>$MAC_SETUP_PROFILE
+
+  cat code_extensions.txt | xargs -L 1 codium --install-extension
 
   npm i -g opencode-ai@latest
 
@@ -213,9 +253,9 @@
   git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
 
   {
-    plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
+    echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)"
 
-    source $ZSH/oh-my-zsh.sh
+    echo "source $ZSH/oh-my-zsh.sh"
   }>>$MAC_SETUP_PROFILE
 
   # reload profile files.
