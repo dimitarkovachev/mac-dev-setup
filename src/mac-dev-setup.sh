@@ -179,8 +179,6 @@ EOF
 
   cat code_extensions.txt | xargs -L 1 codium --install-extension
 
-  npm i -g opencode-ai@latest
-
   # Language
   ## Node / Javascript
   mkdir ~/.nvm
@@ -188,6 +186,7 @@ EOF
   nvm install node                                                                                     # "node" is an alias for the latest version
   brew install yarn                                                                                    # Dependencies management for node
 
+  npm i -g opencode-ai@latest
 
   ## Java
   # curl -s "https://get.sdkman.io" | bash                                                               # sdkman is a tool to manage multiple version of java
