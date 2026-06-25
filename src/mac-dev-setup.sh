@@ -174,7 +174,7 @@ EOF
 
   {
     echo "alias code='codium'"
-    echo "export EDITOR='code -w'"
+    echo "export EDITOR='codium -w'"
   } >>$MAC_SETUP_PROFILE
 
   cat code_extensions.txt | xargs -L 1 codium --install-extension
@@ -189,11 +189,11 @@ EOF
   npm i -g opencode-ai@latest
 
   ## Java
-  # curl -s "https://get.sdkman.io" | bash                                                               # sdkman is a tool to manage multiple version of java
-  # source "$HOME/.sdkman/bin/sdkman-init.sh"
-  # sdk install java
+  curl -s "https://get.sdkman.io" | zsh                                                               # sdkman is a tool to manage multiple version of java
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+  sdk install java
+  sdk install gradle
   # brew install maven
-  # brew install gradle
 
   ## golang
   {
