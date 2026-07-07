@@ -11,6 +11,11 @@ This script allow you to install all the tools you need for setting up your dev 
 curl https://raw.githubusercontent.com/thomaspoignant/mac-dev-setup/master/src/mac-dev-setup.sh | bash
 ```
 
+The script is idempotent — re-running it is safe and won't duplicate profile entries.
+
+# Testing without resetting your Mac
+See [test/README.md](test/README.md) — `test/vm-test.sh` runs the setup script in a disposable local macOS VM (Tart, Apple Silicon).
+
 # What does it install?
 
 It will install all this tools:
