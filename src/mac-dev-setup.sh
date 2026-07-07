@@ -136,7 +136,7 @@ EOF
   echo '. /usr/local/etc/profile.d/z.sh' >> $MAC_SETUP_PROFILE
   echo 'source ~/.zsh_funcs' >> $MAC_SETUP_PROFILE
 
-  # brew install ctop
+  brew install ctop
 
   # fonts (https://github.com/tonsky/FiraCode/wiki/Intellij-products-instructions)
   # brew tap homebrew/cask-fonts
