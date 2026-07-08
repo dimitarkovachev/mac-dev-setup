@@ -56,11 +56,12 @@ The setup script runs over `ssh -t`, so interactive steps happen in your termina
   `gh ssh-key add`. Clean up stale ones now and then: `gh ssh-key list` /
   `gh ssh-key delete <id>`.
 - Apple's Virtualization.framework allows **max 2 VMs running at once**.
-- The default image (`ghcr.io/cirruslabs/macos-tahoe-base`) is a CI image:
-  it already has Homebrew and a few tools preinstalled, so the brew-bootstrap
-  path of the script isn't exercised. For maximum "brand-new Mac" fidelity use
-  `IMAGE=ghcr.io/cirruslabs/macos-tahoe-vanilla:latest ./test/vm-test.sh fresh`
-  (no brew at all; sudo prompts for the `admin` password during install).
+- The default image (`ghcr.io/cirruslabs/macos-tahoe-vanilla`) is a blank Mac:
+  no Homebrew, no Command Line Tools — so the script's brew bootstrap is
+  exercised exactly like on a brand-new machine. That bootstrap (Xcode CLT
+  download) adds a good 10–20 min to every `fresh`. To iterate faster on the
+  post-brew parts of the script use the CI image, which has brew preinstalled:
+  `IMAGE=ghcr.io/cirruslabs/macos-tahoe-base:latest ./test/vm-test.sh fresh`
   Other images: https://github.com/orgs/cirruslabs/packages
 - GUI apps (casks) install fine headless; use `gui` to actually look at them.
 - Reclaim disk: `./test/vm-test.sh destroy` removes the VM; `tart prune`

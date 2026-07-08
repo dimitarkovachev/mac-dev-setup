@@ -14,7 +14,7 @@
 # nothing to set up and no VM to keep around besides the test VM itself.
 set -euo pipefail
 
-IMAGE="${IMAGE:-ghcr.io/cirruslabs/macos-tahoe-base:latest}"
+IMAGE="${IMAGE:-ghcr.io/cirruslabs/macos-tahoe-vanilla:latest}"
 VM="${VM:-macsetup-test}"
 VM_USER="admin"
 VM_PASS="admin"
@@ -98,8 +98,9 @@ run_setup() {
   local ip
   ip="$(wait_for_ip)"
   echo "==> Copying repo into VM ($ip)"
-  # The cirruslabs CI image ships with a buildkite tap that Homebrew 6 flags as
-  # untrusted on every command - drop it so the logs stay readable
+  # No-op on the vanilla image (no brew yet). The cirruslabs -base CI image
+  # ships a buildkite tap that Homebrew 6 flags as untrusted on every command -
+  # drop it so the logs stay readable when IMAGE is overridden to -base
   vssh "$VM_USER@$ip" "command -v brew >/dev/null && brew untap buildkite/buildkite 2>/dev/null; true"
   vssh "$VM_USER@$ip" "rm -rf ~/mac-dev-setup && mkdir -p ~/mac-dev-setup"
   tar -C "$REPO_ROOT" --exclude .git -cf - . | vssh "$VM_USER@$ip" "tar -C ~/mac-dev-setup -xf -"

@@ -223,7 +223,10 @@ source "$BREW_PREFIX/opt/nvm/nvm.sh"                                            
 nvm install node                                                                                     # "node" is an alias for the latest version
 brew install yarn                                                                                    # Dependencies management for node
 
-npm i -g opencode-ai@latest
+# npm i -g opencode-ai@latest
+brew install --cask claude                                                                           # Claude desktop app
+curl -fsSL https://claude.ai/install.sh | bash                                                       # Claude Code CLI -> ~/.local/bin
+echo "export PATH=\"\$HOME/.local/bin:\$PATH\" # claude code" >>"$MAC_SETUP_PROFILE"
 
 ## Java
 if [ ! -d "$HOME/.sdkman" ]; then
@@ -286,7 +289,7 @@ echo "export PATH=\"$BREW_PREFIX/opt/libpq/bin:\$PATH\"" >> "$MAC_SETUP_PROFILE"
 # brew install docker-machine-completion
 
 # AWS command line
-brew install awscli # Official command line
+# brew install awscli # Official command line
 # pip3 install saws    # A supercharged AWS command line interface (CLI).
 
 # K8S command line
