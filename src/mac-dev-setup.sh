@@ -173,6 +173,11 @@ brew install --cask rectangle                                                   
 brew install --cask alt-tab
 brew install --cask alfred
 brew install --cask hammerspoon
+# Get hammerspoon SpoonInstall
+mkdir -p ~/.hammerspoon/Spoons
+cd /tmp && curl -LO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip
+unzip SpoonInstall.spoon.zip -d ~/.hammerspoon/Spoons/
+
 # brew install --cask karabiner-elements
 
 # macOS system settings
