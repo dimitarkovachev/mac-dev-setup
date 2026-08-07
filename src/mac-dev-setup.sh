@@ -172,6 +172,7 @@ brew install --cask zen
 brew install --cask rectangle                                                                           # manage windows
 brew install --cask alt-tab
 brew install --cask alfred
+brew install --cask hammerspoon
 # brew install --cask karabiner-elements
 
 # macOS system settings
