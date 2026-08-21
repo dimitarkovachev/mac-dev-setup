@@ -11,8 +11,7 @@ MAC_SETUP_PROFILE=$INSTALL_FOLDER/macsetup_profile
 # run so re-running never duplicates lines. Don't edit it by hand.
 : >"$MAC_SETUP_PROFILE"
 
-# Keep brew non-interactive: no "Do you want to proceed?" per install, no env hints
-export HOMEBREW_NO_ASK=1
+# Keep brew quiet: no "add this to your shell" hint after each install
 export HOMEBREW_NO_ENV_HINTS=1
 
 # install brew
@@ -42,13 +41,8 @@ echo "export PATH=\"$BREW_PREFIX/bin:\$PATH\"" >>"$MAC_SETUP_PROFILE"
 brew update
 
 # CURL / WGET
-brew install curl
 brew install wget
 
-{
-  echo "export PATH=\"$BREW_PREFIX/opt/curl/bin:\$PATH\""
-  echo "export PATH=\"$BREW_PREFIX/opt/sqlite/bin:\$PATH\""
-}>>"$MAC_SETUP_PROFILE"
 
 # git
 brew install git                                                                                      # https://formulae.brew.sh/formula/git
@@ -107,7 +101,7 @@ echo "alias dotfiles='git --git-dir=\$HOME/.dotfiles --work-tree=\$HOME'" >>"$MA
 # git config --global init.templateDir ~/.git-templates/git-secrets
 
 # ZSH
-brew install zsh                                                                     # Install zsh and zsh completions
+# brew install zsh                                                                     # Install zsh and zsh completions
 # Make completion dirs group/other non-writable so zsh compaudit is happy.
 # (No sudo chown here: brew must stay owner of its own dirs or every later install breaks.)
 if [ -d "$BREW_PREFIX/share/zsh" ]; then
@@ -139,10 +133,10 @@ brew install fzf
 
 brew install tree
 # brew install ack
-brew install bash-completion
+# brew install bash-completion
 brew install jq
 brew install htop
-brew install tldr
+# brew install tlrc
 brew install coreutils
 brew install watch
 
@@ -151,6 +145,9 @@ touch ~/.z
 echo ". $BREW_PREFIX/etc/profile.d/z.sh" >> "$MAC_SETUP_PROFILE"
 
 brew install ctop
+
+brew install grc                                                                                     # colorizes command output
+echo "[ -r \"$BREW_PREFIX/etc/grc.zsh\" ] && source \"$BREW_PREFIX/etc/grc.zsh\"" >>"$MAC_SETUP_PROFILE"
 
 # fonts (https://github.com/tonsky/FiraCode/wiki/Intellij-products-instructions)
 # brew tap homebrew/cask-fonts
@@ -175,8 +172,11 @@ brew install --cask alfred
 brew install --cask hammerspoon
 # Get hammerspoon SpoonInstall
 mkdir -p ~/.hammerspoon/Spoons
-cd /tmp && curl -LO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip
-unzip SpoonInstall.spoon.zip -d ~/.hammerspoon/Spoons/
+(
+  cd /tmp || exit
+  curl -fsSLO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip
+  unzip -oq SpoonInstall.spoon.zip -d ~/.hammerspoon/Spoons/
+)
 
 # brew install --cask karabiner-elements
 
@@ -238,7 +238,8 @@ echo "export PATH=\"\$HOME/.local/bin:\$PATH\" # claude code" >>"$MAC_SETUP_PROF
 if [ ! -d "$HOME/.sdkman" ]; then
   curl -s "https://get.sdkman.io" | zsh                                                              # sdkman is a tool to manage multiple version of java
 fi
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+# shellcheck disable=SC1091
+source "$HOME/.sdkman/bin/sdkman-init.sh"                                                            # sdk is a shell function, load it for this script
 sdk install java
 # also install latest Temurin 21 (LTS); resolve the exact version from sdkman's list
 JAVA21_TEM="$(sdk list java 2>/dev/null | grep -o '21\.[0-9]*\.[0-9]*-tem' | head -1 || true)"
@@ -305,7 +306,7 @@ echo "export PATH=\"\$HOME/.asdf/shims:\$PATH\"" >>"$MAC_SETUP_PROFILE"
 export PATH="$HOME/.asdf/shims:$PATH"
 asdf plugin add kubectl 2>/dev/null || true
 asdf install kubectl latest
-asdf set -u kubectl latest 2>/dev/null || asdf global kubectl latest 2>/dev/null || true
+asdf set -u kubectl latest 2>/dev/null || true
 
 clone_zsh_plugin() {
   local repo="$1" dest="$2"
@@ -317,8 +318,8 @@ clone_zsh_plugin https://github.com/zdharma-continuum/fast-syntax-highlighting.g
 clone_zsh_plugin https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
 
 {
-  echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)"
-
+  #echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)"
+  echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting)"
   echo "source $ZSH/oh-my-zsh.sh"
 }>>"$MAC_SETUP_PROFILE"
 

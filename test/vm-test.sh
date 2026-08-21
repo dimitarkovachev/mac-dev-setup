@@ -35,6 +35,8 @@ ensure_tools() {
   command -v sshpass >/dev/null 2>&1 || brew install cirruslabs/cli/sshpass || true
 }
 
+# The command runs in the VM, so it must expand there and not on this machine.
+# shellcheck disable=SC2029
 vssh() {
   if command -v sshpass >/dev/null 2>&1; then
     sshpass -p "$VM_PASS" ssh "${SSH_OPTS[@]}" "$@"
