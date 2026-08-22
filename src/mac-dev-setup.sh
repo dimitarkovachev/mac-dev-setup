@@ -47,6 +47,7 @@ brew install wget
 # git
 brew install git                                                                                      # https://formulae.brew.sh/formula/git
 # Adding git aliases (https://github.com/thomaspoignant/gitalias)
+brew install git-delta
 # git clone https://github.com/thomaspoignant/gitalias.git $INSTALL_FOLDER/gitalias && echo -e "[include]\n    path = $INSTALL_FOLDER/gitalias/.gitalias\n$(cat ~/.gitconfig)" > ~/.gitconfig
 
 brew install gh
@@ -116,19 +117,36 @@ fi
 ZSH="${ZSH:-$HOME/.oh-my-zsh}"
 ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
 
+clone_zsh_plugin() {
+  local repo="$1" dest="$2"
+  [ -d "$dest" ] || git clone --depth 1 -- "$repo" "$dest"
+}
+clone_zsh_plugin https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+clone_zsh_plugin https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+clone_zsh_plugin https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$ZSH_CUSTOM/plugins/fast-syntax-highlighting"
+clone_zsh_plugin https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
+
+{
+  #echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)"
+  echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting)"
+  echo "source $ZSH/oh-my-zsh.sh"
+}>>"$MAC_SETUP_PROFILE"
+
 # Terminal replacement https://cmux.com/
 brew install --cask cmux
 brew install fzf
 
 # Pimp command line
 # brew install micro                                                                                    # replacement for nano/vi
-# brew install lsd                                                                                      # replacement for ls
+brew install lsd                                                                                      # replacement for ls
+brew install bat
 {
   echo "alias ls='lsd'"
   echo "alias l='ls -l'"
   echo "alias la='ls -a'"
   echo "alias lla='ls -la'"
   echo "alias lt='ls --tree'"
+  echo "alias cat='bat'"
 } >>"$MAC_SETUP_PROFILE"
 
 brew install tree
@@ -196,7 +214,7 @@ sudo pmset -c sleep 0 || true
 # brew install --cask whatsapp
 
 # Dev tools
-brew install --cask ngrok                                                                               # tunnel localhost over internet.
+# brew install --cask ngrok                                                                               # tunnel localhost over internet.
 brew install --cask postman                                                                             # Postman makes sending API requests simple.
 
 # IDE
@@ -308,20 +326,6 @@ asdf plugin add kubectl 2>/dev/null || true
 asdf install kubectl latest
 asdf set -u kubectl latest 2>/dev/null || true
 
-clone_zsh_plugin() {
-  local repo="$1" dest="$2"
-  [ -d "$dest" ] || git clone --depth 1 -- "$repo" "$dest"
-}
-clone_zsh_plugin https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-clone_zsh_plugin https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-clone_zsh_plugin https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$ZSH_CUSTOM/plugins/fast-syntax-highlighting"
-clone_zsh_plugin https://github.com/marlonrichert/zsh-autocomplete.git "$ZSH_CUSTOM/plugins/zsh-autocomplete"
-
-{
-  #echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)"
-  echo "plugins=(git grc zsh-autosuggestions zsh-syntax-highlighting)"
-  echo "source $ZSH/oh-my-zsh.sh"
-}>>"$MAC_SETUP_PROFILE"
 
 # hook the generated profile into .zsh_profile (once)
 ZSH_PROFILE="$HOME/.zsh_profile"
