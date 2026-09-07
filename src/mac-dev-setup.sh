@@ -252,6 +252,11 @@ brew install --cask claude                                                      
 curl -fsSL https://claude.ai/install.sh | bash                                                       # Claude Code CLI -> ~/.local/bin
 echo "export PATH=\"\$HOME/.local/bin:\$PATH\" # claude code" >>"$MAC_SETUP_PROFILE"
 
+brew install --cask codex
+{
+  echo "alias codex='codex --profile personal'"
+} >>"$MAC_SETUP_PROFILE"
+
 ## Java
 if [ ! -d "$HOME/.sdkman" ]; then
   curl -s "https://get.sdkman.io" | zsh                                                              # sdkman is a tool to manage multiple version of java
