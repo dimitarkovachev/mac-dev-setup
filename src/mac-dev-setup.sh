@@ -209,6 +209,12 @@ killall Dock 2>/dev/null || true
 ## Battery > Options: prevent automatic sleeping on power adapter when the display is off
 sudo pmset -c sleep 0 || true
 
+## Windows: square corners instead of rounded ones.
+## These keys are not documented by Apple. A macOS update can make them stop working.
+## Apps show the change after they restart. To undo: defaults delete -g NSConvolutionOverride1 (and 2).
+defaults write -g NSConvolutionOverride1 -float 0.01
+defaults write -g NSConvolutionOverride2 -float 0.01
+
 # Communication
 # brew install --cask slack
 # brew install --cask whatsapp
